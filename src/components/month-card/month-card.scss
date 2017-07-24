@@ -1,0 +1,44 @@
+month-card {
+    .main {
+        margin: 8px;
+        box-shadow: 3px 3px 4px #888888;
+    }
+    .month {
+        height: 40px;
+        background: color($colors, "primary");
+        color: #fff;
+        padding: 7px 0px 0px 10px;
+        font-size: 20px;
+    }
+    .table {
+        width: 100%;
+        height: 100%;
+    }
+    .days {
+        height: 100%;
+    }
+    .table .head {
+        background: color($colors, "secondary");
+        height: 8%;
+        color: #fff;
+    }
+    .table .normalButton {
+        height: 65px;
+        width: 100%;
+        background: #fff;
+        font-size: 18px;
+        color: #2F4F4F;
+        text-align: center;
+    }
+    .table .dayButton {
+        height: 65px;
+        width: 100%;
+        background: color($colors, "secondary");
+        font-size: 18px;
+        color: #2F4F4F;
+        text-align: center;
+    }
+    .table td {
+        border: #F5F5DC 1px solid;
+    }
+}

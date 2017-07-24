@@ -1,11 +1,13 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-  <h4>Hello World!. I'm using ionic with visual code in Debian </h4>
-</ion-content>
+<ion-split-pane when='lg'>
+  <ion-menu [content]='Content'>
+    <div class='home-header'>
+      <h2>Bienvenido</h2>
+    </div>
+    <ion-list no-lines>
+      <button ion-item *ngFor='let icon of listOfIcons; let _index = index' menuClose>
+        <ion-icon [name]='icon.icon' margin-right></ion-icon>{{icon.title}}
+      </button>
+    </ion-list>
+  </ion-menu>
+  <ion-nav main #Content [root]='mainContent'></ion-nav>
+</ion-split-pane>

@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar color='primary'>
+        <ion-buttons left>
+            <button ion-button icon-only menuToggle>
+                <ion-icon name='menu'></ion-icon>
+            </button>
+        </ion-buttons>
+        <h1 class='calendar-title' text-center>CucuApp</h1>
+        <ion-buttons right>
+            <button ion-button icon-only>
+                <ion-icon name='calendar'></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <month-card [listOfWeeks]="month.getDays()" [name]="month.getName()" [actualDay]="month.getActualDay()" [month]="month.getMonth()"></month-card>
+</ion-content>

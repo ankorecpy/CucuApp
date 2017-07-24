@@ -1,0 +1,25 @@
+<!-- Generated template for the MonthCardComponent component -->
+<div class="main">
+  <div class="month">
+    <label>{{name}}</label>
+  </div>
+  <div>
+    <table class="table" border=1 cellspacing=0 cellpadding=2 bordercolor=#fff>
+      <tr class="head">
+        <th>Lu</th>
+        <th>Ma</th>
+        <th>Mi</th>
+        <th>Ju</th>
+        <th>Vi</th>
+        <th>Sá</th>
+        <th>Do</th>
+      </tr>
+      <tr *ngFor="let week of listOfWeeks">
+        <td *ngFor="let day of week">
+          <button *ngIf="day!=0 && day != actualDay" class="normalButton" (click)="goToOperations(day)">{{day}}</button>
+          <button *ngIf="actualDay != 0 && day == actualDay" class="dayButton" (click)="goToOperations(day)">{{day}}</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
