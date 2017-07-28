@@ -22,8 +22,8 @@ export class MonthData {
             initialDayOfWeek = 0;
         }
         let date: Date = new Date();
-        let day: number = (date.getMonth()) == month ? date.getDate() : 0;
-        let newMonth = new Month(this.listOfMonths[month], this.listOfWeeks, day, (month + 1));
+        let day: number = ((date.getMonth()) == month) && ((date.getFullYear()) == year) ? date.getDate() : 0;
+        let newMonth = new Month(this.listOfMonths[month], this.listOfWeeks, day, month);
         return newMonth;
     }
     private fillWeek(intialDay: number, dayCounter: number, numberOfWeek: number, maximumDayForMonth: number): number {

@@ -1,0 +1,22 @@
+page-operations {
+    .counter {
+        color: color($colors, 'secondary');
+        height: 50%;
+        font-family: "Homer Simpson", cursive;
+        font-size: 60px;        
+        border: none;
+    }
+    .eggs-info {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        font-size: 19px;
+    }
+    .note {
+        display: flex;
+        width: 80%;
+    }
+}
+//<div>Iconos diseñados por <a href="https://www.flaticon.es/autores/roundicons" title="Roundicons">Roundicons</a> desde <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.com</a> con licencia <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+//<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet"> 

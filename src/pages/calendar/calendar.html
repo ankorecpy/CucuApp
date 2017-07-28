@@ -1,18 +1,26 @@
-<ion-header>
+<ion-header class="header">
     <ion-navbar color='primary'>
         <ion-buttons left>
             <button ion-button icon-only menuToggle>
                 <ion-icon name='menu'></ion-icon>
             </button>
         </ion-buttons>
-        <h1 class='calendar-title' text-center>CucuApp</h1>
+        <h1 class='calendar-title' text-left>CucuApp</h1>
+    </ion-navbar>
+    <ion-navbar color='primary'>
+        <ion-buttons left>
+            <button ion-button icon-only [disabled]='(month.getMonth() == 0)' (click)='previousMonth()'>
+                <ion-icon name='ios-arrow-back'></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title text-center>{{year}}</ion-title>
         <ion-buttons right>
-            <button ion-button icon-only>
-                <ion-icon name='calendar'></ion-icon>
+            <button ion-button icon-only [disabled]='(month.getMonth() == 11)' (click)='nextMonth()'>
+                <ion-icon name='ios-arrow-forward'></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content>
-    <month-card [listOfWeeks]="month.getDays()" [name]="month.getName()" [actualDay]="month.getActualDay()" [month]="month.getMonth()"></month-card>
+<ion-content class="content">
+    <month-card class="month" [listOfWeeks]="month.getDays()" [name]="month.getName()" [actualDay]="month.getActualDay()" [month]="month.getMonth()" [year]='year'></month-card>    
 </ion-content>

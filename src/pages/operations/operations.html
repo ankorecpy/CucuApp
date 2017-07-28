@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar color='primary'>
+    <ion-title text-left>{{nameMonth}} {{day}}</ion-title>
+  </ion-navbar>
+  <ion-toolbar color='primary'>
+    <ion-segment [(ngModel)]='operationActivated'>
+      <ion-segment-button value='sell' (click)='calculateSells()'>Ventas</ion-segment-button>
+      <ion-segment-button value='collect'>Colecta</ion-segment-button>
+      <ion-segment-button value='buy' (click)='calculateBuys()'>Compras</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div class='operation-main' [ngSwitch]='operationActivated'>
+        <div class='eggs-info' *ngSwitchCase="'collect'">
+          <p>Producción de huevos</p>
+          <ion-input class='counter' min='0' max='1000000000' type='number' color='secondary' text-center></ion-input><br>
+          <p>Nota del día.</p>
+          <textarea class='note' type='text' autocomplete='true' autocorrect='true'></textarea>
+        </div>
+        <ion-list *ngSwitchCase="'buy'">
+          <ion-item *ngFor='let buy of (this.buyDao.getBuys())'>
+            <p>{{buy.date.getHours()}}:{{buy.date.getMinutes()}}</p>
+            <h2>{{buy.concept}}</h2>
+            <h2>Cant: {{buy.quantity}}</h2>
+            <h2>Total: {{buy.value * buy.quantity}}</h2>
+            <button ion-button icon-only color='itemLight' (click)='goToBuy()' item-end>
+              <ion-icon name='ios-arrow-forward'></ion-icon>
+            </button>
+          </ion-item>
+        </ion-list>
+        <ion-list *ngSwitchCase="'sell'">
+          <div *ngFor='let sell of listOfSells'>
+            <ion-item>
+              <p>{{sell.date.getHours()}}:{{sell.date.getMinutes()}}</p>
+              <h2>{{sell.buyer}}</h2>
+              <h2>Cant: {{sell.quantity}}</h2>
+              <h2>Total: {{sell.value}}</h2>
+              <button ion-button icon-only color='itemLight' *ngIf='sell.payStatus' (click)='goToBuy()' item-end>
+                <ion-icon name='ios-arrow-forward'></ion-icon>
+              </button>
+              <button ion-button icon-only color='indicated' *ngIf='!sell.payStatus' (click)='goToBuy()' item-end>
+                <ion-icon name='ios-arrow-forward'></ion-icon>
+              </button>
+            </ion-item>
+          </div>
+        </ion-list>
+    </div>
+</ion-content>

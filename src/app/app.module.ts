@@ -10,9 +10,15 @@ import { HomePage } from '../pages/home/home';
 import { CalendarPage } from '../pages/calendar/calendar';
 import { BuyPage } from '../pages/buy/buy';
 import { SellPage } from '../pages/sell/sell';
+import { OperationsPage } from '../pages/operations/operations';
  
 import { MonthData } from '../providers/models/month-data';
 import { MonthCardComponent } from '../components/month-card/month-card';
+import { Sell } from '../providers/models/sell-data';
+import { Buy } from '../providers/models/buy-data';
+
+import { SellDao } from '../providers/dataBase/sell-dao';
+import { BuyDao } from '../providers/dataBase/buy-dao';
 
 @NgModule({
   declarations: [
@@ -21,6 +27,7 @@ import { MonthCardComponent } from '../components/month-card/month-card';
     CalendarPage,
     BuyPage,
     SellPage,
+    OperationsPage,
     MonthCardComponent
   ],
   imports: [
@@ -33,13 +40,18 @@ import { MonthCardComponent } from '../components/month-card/month-card';
     HomePage,
     CalendarPage,
     BuyPage,
-    SellPage
+    SellPage,
+    OperationsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     MonthData,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Sell,
+    Buy,
+    SellDao,
+    BuyDao
   ]
 })
 export class AppModule {}

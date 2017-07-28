@@ -38,14 +38,23 @@ $colors: (
   secondary:  #000080,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  itemLight:(
+    base: transparent,
+    contrast: #2F4F4F
+  ),
+  indicated:(
+    base: #2F4F4F,
+    contrast: #fff
+  )
 );
+
 
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
+$toolbar-ios-active-color: #fff;
 
 
 
@@ -53,10 +62,11 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-$segment-button-md-height: 3rem;
+//$segment-button-md-height: rem;
 $toolbar-md-active-color: #fff;
-$segment-button-md-line-height: 2.6rem;
-$toolbar-md-height: 3.9em;
+$segment-button-md-line-height: 4.6rem;
+$toolbar-md-height: 3.2em;
+//$segment-button-md-padding-end: 1rem;
 
 // App Windows Variables
 // --------------------------------------------------
