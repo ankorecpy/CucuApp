@@ -1,0 +1,15 @@
+<ion-content padding>
+  <div class="information">
+    <h2>NOTA</h2>
+    <h3>Por motivos de rendimiento, al inicializar el presente año se debe liberar la la información del año pasado, excepto las ventas pendientes. Tome apunte de la siguiente información ya que al presionar el botón Limpiar se borrara.</h3>
+  </div>
+  <ion-list>
+    <ion-item *ngFor="let month of months; let index = index">
+      <h2>{{month}}</h2>
+      <h3>Huevos: {{this.productionDao.getTotalOfProductions(this.year, (index + 1))}}</h3>
+      <h3>Ventas: {{this.saleDao.getTotalOfSales(this.year, (index + 1))}}</h3>
+      <h3>Compras: {{this.purchaseDao.getTotalOfPurchases(this.year, (index + 1))}}</h3>
+    </ion-item>
+  </ion-list>
+  <button ion-button (click)="clean()" block>Limpiar</button>
+</ion-content>

@@ -16,10 +16,9 @@ export class MonthCardComponent {
   constructor(public navController: NavController, public navParams: NavParams) {
 
   }
-
   goToOperations(day: number): void {
-    let date: Date = new Date();
+    let date: Date = new Date(this.year, this.month, day);
     let modificationActivated: boolean = ((date.getMonth()) == this.month) && (day == this.actualDay);    
-    this.navController.push(OperationsPage, {day: day, month: this.month, year: this.year, nameMonth: this.name, modification: modificationActivated});
+    this.navController.push(OperationsPage, {date: date, nameMonth: this.name, modification: modificationActivated});
   }
 }

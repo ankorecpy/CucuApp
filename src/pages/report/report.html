@@ -1,0 +1,21 @@
+
+<ion-header>
+  <ion-navbar color='primary'>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-left>Reporte {{this.year}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content  class="main" padding>
+  <ion-list>
+    <ion-item  *ngFor="let month of months; let index = index">
+      <h2>{{month}}</h2>
+      <h3>Huevos: {{this.productionDao.getTotalOfProductions(this.year, (index + 1))}}</h3>
+      <h3>Ventas: {{this.saleDao.getTotalOfSells(this.year, (index + 1))}}</h3>
+      <h3>Compras: {{this.purchaseDao.getTotalOfPurchases(this.year, (index + 1))}}</h3>
+    </ion-item>
+  </ion-list>
+</ion-content>

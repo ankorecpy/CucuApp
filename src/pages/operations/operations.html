@@ -1,49 +1,61 @@
 <ion-header>
   <ion-navbar color='primary'>
-    <ion-title text-left>{{nameMonth}} {{day}}</ion-title>
+    <ion-title text-left>{{nameMonth}} {{date.getDate()}}</ion-title>
+    <ion-buttons right>
+      <button ion-button (click)="processOperation()" icon-only>
+        <ion-icon *ngIf="modificationActivated && (operationActivated=='production')" name='md-checkmark'></ion-icon>
+        <ion-icon *ngIf="modificationActivated && (operationActivated!='production')" name='md-add'></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
   <ion-toolbar color='primary'>
     <ion-segment [(ngModel)]='operationActivated'>
-      <ion-segment-button value='sell' (click)='calculateSells()'>Ventas</ion-segment-button>
-      <ion-segment-button value='collect'>Colecta</ion-segment-button>
-      <ion-segment-button value='buy' (click)='calculateBuys()'>Compras</ion-segment-button>
+      <ion-segment-button value='sale' (click)='getSalesOfDay()'>Ventas</ion-segment-button>
+      <ion-segment-button value='production'>Producción</ion-segment-button>
+      <ion-segment-button value='purchase' (click)='getPurchasesOfDay()'>Compras</ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
 <ion-content>
     <div class='operation-main' [ngSwitch]='operationActivated'>
-        <div class='eggs-info' *ngSwitchCase="'collect'">
-          <p>Producción de huevos</p>
-          <ion-input class='counter' min='0' max='1000000000' type='number' color='secondary' text-center></ion-input><br>
-          <p>Nota del día.</p>
-          <textarea class='note' type='text' autocomplete='true' autocorrect='true'></textarea>
+        <div class='eggs-info' *ngSwitchCase="'production'">
+          <ion-label color="dark">Producción de huevos</ion-label>
+          <ion-input [disabled]='!modificationActivated' [(ngModel)]='this.production.eggsCollected' class='counter' min='0' max='99999' type='number' color='secondary' text-center></ion-input><br>
+          <ion-label color="dark">Nota del día.</ion-label>
+          <textarea [disabled]='!modificationActivated' class='note' [(ngModel)]='this.production.note' type='text' autocomplete='true' autocorrect='true'>{{this.production.getNote()}}</textarea>
         </div>
-        <ion-list *ngSwitchCase="'buy'">
-          <ion-item *ngFor='let buy of (this.buyDao.getBuys())'>
-            <p>{{buy.date.getHours()}}:{{buy.date.getMinutes()}}</p>
-            <h2>{{buy.concept}}</h2>
-            <h2>Cant: {{buy.quantity}}</h2>
-            <h2>Total: {{buy.value * buy.quantity}}</h2>
-            <button ion-button icon-only color='itemLight' (click)='goToBuy()' item-end>
+        <ion-list *ngSwitchCase="'purchase'">
+          <button ion-button *ngIf="this.lastPurchaseDeleted!=null" (click)="reInsertPurchase()" color="secondary" block>Deshacer</button>
+          <ion-item *ngFor='let purchase of this.listOfPurchases'>
+            <p>{{purchase.date.getHours()}}:{{purchase.date.getMinutes()}}</p>
+            <h2>{{purchase.concept}}</h2>
+            <h2>Cant: {{purchase.quantity}}</h2>
+            <h2>Total: {{purchase.value * purchase.quantity}}</h2>
+            <button ion-button margin-right *ngIf="modificationActivated" color='itemLight' icon-only (click)='deletePurchase(purchase)' item-end>
+              <ion-icon name='md-trash'></ion-icon>
+            </button>
+            <button ion-button color='itemLight' icon-only (click)='goToPurchase(purchase)' item-end>
               <ion-icon name='ios-arrow-forward'></ion-icon>
             </button>
           </ion-item>
         </ion-list>
-        <ion-list *ngSwitchCase="'sell'">
-          <div *ngFor='let sell of listOfSells'>
-            <ion-item>
-              <p>{{sell.date.getHours()}}:{{sell.date.getMinutes()}}</p>
-              <h2>{{sell.buyer}}</h2>
-              <h2>Cant: {{sell.quantity}}</h2>
-              <h2>Total: {{sell.value}}</h2>
-              <button ion-button icon-only color='itemLight' *ngIf='sell.payStatus' (click)='goToBuy()' item-end>
-                <ion-icon name='ios-arrow-forward'></ion-icon>
-              </button>
-              <button ion-button icon-only color='indicated' *ngIf='!sell.payStatus' (click)='goToBuy()' item-end>
-                <ion-icon name='ios-arrow-forward'></ion-icon>
-              </button>
-            </ion-item>
-          </div>
+        <ion-list *ngSwitchCase="'sale'">
+          <button ion-button *ngIf="this.lastSaleDeleted!=null" (click)="reInsertSale()" color="secondary" block>Deshacer</button>
+          <ion-item *ngFor='let sale of listOfSales'>
+            <p>{{sale.date.getHours()}}:{{sale.date.getMinutes()}}</p>
+            <h2>{{sale.buyer}}</h2>
+            <h2>Cant: {{sale.quantity}}</h2>
+            <h2>Total: {{sale.value}}</h2>
+            <button ion-button margin-right *ngIf="modificationActivated" color='itemLight' icon-only (click)='deleteSale(sale)' item-end>
+              <ion-icon name='md-trash'></ion-icon>
+            </button>   
+            <button ion-button icon-only *ngIf='sale.payStatus' (click)='goToSale(sale)' item-end>
+              <ion-icon name='ios-arrow-forward'></ion-icon>
+            </button>         
+            <button ion-button icon-only color='indicated' *ngIf='!sale.payStatus' (click)='goToSale(sale)' item-end>
+              <ion-icon name='ios-arrow-forward'></ion-icon>
+            </button>
+          </ion-item>
         </ion-list>
     </div>
 </ion-content>

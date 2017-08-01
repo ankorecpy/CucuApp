@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { BuyDao } from '../../providers/dataBase/buy-dao';
-import { SellDao } from '../../providers/dataBase/sell-dao';
-import { Buy } from '../../providers/models/buy-data';
-import { Sell } from '../../providers/models/sell-data';
+import { PurchaseDao } from '../../providers/dataBase/purchase-dao';
+import { SaleDao } from '../../providers/dataBase/sale-dao';
+import { ProductionDao } from '../../providers/dataBase/production-dao';
+import { Purchase } from '../../providers/models/purchase-data';
+import { Sale } from '../../providers/models/sale-data';
+import { Production } from '../../providers/models/production-data';
+import { SalePage } from '../sale/sale';
+import { PurchasePage } from '../purchase/purchase';
 
 @Component({
   selector: 'page-operations',
@@ -11,56 +15,75 @@ import { Sell } from '../../providers/models/sell-data';
 })
 export class OperationsPage {
   private nameMonth: string;
-  private day: number;
-  private month: number;
-  private year: number;
+  private date: Date;
   private operationActivated: string;
   private modificationActivated :boolean;
-  private listOfSells: Sell[];
-  private listOfBuys: Buy[];
-  //private eggsCollected: number;
-
-  constructor(public navCtrl: NavController, private navParams: NavParams, private sellDao: SellDao, private buyDao: BuyDao) {    
-      let date: Date = new Date();
-      this.operationActivated = 'collect';
-      this.year = date.getFullYear();
-      this.month = this.navParams.get('month');
-      this.day = this.navParams.get('day');      
+  private listOfSales: Sale[];
+  private listOfPurchases: Purchase[];
+  private production: Production;
+  private lastSaleDeleted: Sale;
+  private lastPurchaseDeleted: Purchase;
+  
+  constructor(public navCtrl: NavController, private navParams: NavParams, private saleDao: SaleDao, private purchaseDao: PurchaseDao, private productionDao: ProductionDao) {    
+      this.date = this.navParams.get('date');
+      this.operationActivated = 'production';
       this.nameMonth = this.navParams.get('nameMonth');    
       this.modificationActivated = this.navParams.get('modification');
+      this.production = this.productionDao.getProductionOfDay();
   }
   ionWiewDidEnter(){
   }
-  private sumar(): void {
-      console.log("sumar");
+  private getPurchasesOfDay(): void {
+    this.listOfPurchases = this.purchaseDao.getPurchases(this.date.getDate(), this.date.getMonth(), this.date.getFullYear());
   }
-  private calculateBuys(): void {
-    this.listOfBuys = this.buyDao.getBuys();
+  private getSalesOfDay(): void {
+    this.listOfSales = this.saleDao.getSales(this.date.getDate(), this.date.getMonth(), this.date.getFullYear());
   }
-  private calculateSells(): void {
-    this.listOfSells = this.sellDao.getListOfSells();
+  private getProductionOfDay(): void {
+    this.production = this.productionDao.getProductionOfDay();
   }
-  private msg(): string {
-      let message: string = "jajaja";
-      return message;
+  private goToSale(sale: Sale): void {
+      let status: string = this.modificationActivated ? "modify" : "view";
+      this.navCtrl.push(SalePage, {sale: sale, status: status});
   }
-/*
-  ionViewWillEnter(): void {
-      let actualYear: number = new Date().getFullYear();
-      switch (this.operationActived) {
-          case "sell":
-              this.sellDao.selectSellsByDate(actualYear + "-" + this.month + "-" + this.day).then(result =>{
-                  this.listOfSells = result;
-              });
-              break;
-          case "buy":
-              this.buyDao.selectBuysByDate(actualYear + "-" + this.month + "-" + this.day).then(result =>{
-                  this.listOfBuys = result;
-              });
-              break;
-          case "collect":
-              break;
+  private goToPurchase(purchase: Purchase): void {
+      let status: string = this.modificationActivated ? "modify" : "view";
+      this.navCtrl.push(PurchasePage, {purchase: purchase, status: status});
+  }
+  private deleteSale(sale: Sale): void {
+    this.lastSaleDeleted = sale;
+    this.saleDao.delete(sale.getDate());
+    this.getSalesOfDay();
+  }
+  private deletePurchase(purchase: Purchase): void {
+    this.lastPurchaseDeleted = purchase;
+    this.purchaseDao.delete(purchase.getDate());
+    this.getPurchasesOfDay();
+  }
+  private reInsertPurchase(): void {
+    this.purchaseDao.insert(this.lastPurchaseDeleted);
+    this.lastPurchaseDeleted = null;
+    this.getPurchasesOfDay();
+  }
+  private reInsertSale(): void {
+    this.saleDao.insert(this.lastSaleDeleted);
+    this.lastSaleDeleted = null;
+    this.getSalesOfDay();
+  }
+  private processOperation(): void {
+      switch (this.operationActivated) {
+        case "production":
+        break;
+        case "purchase":
+            let newPurchase: Purchase = new Purchase(new Date(), "", 1, 0);
+            this.navCtrl.push(PurchasePage, {purchase: newPurchase, status: "new"});
+        break;
+        case "sale":
+            let newSale: Sale = new Sale(new Date(), "", 1, 0, false);
+            this.navCtrl.push(SalePage, {sale: newSale, status: "new"});
+        break;
+        default:
+        break;
       }
   }
-*/
 }

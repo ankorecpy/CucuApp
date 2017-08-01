@@ -1,0 +1,44 @@
+<ion-header>
+    <ion-navbar color='primary' class='sale-navbar'>
+        <ion-title text-center>VENTA</ion-title>
+        <ion-buttons *ngIf="this.status != 'view'" right>
+            <button ion-button icon-only (click)='processsale()' [disabled]='!form.valid'>
+                <ion-icon name='checkmark'></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content class='sale-main'>
+    <ion-row>
+        <div class='sale-inputs' ion-col col-12 col-lg-6>
+            <form #form='ngForm'>
+                <ion-row>
+                    <ion-col col-12 col-md-8 col-lg-8>
+                        <ion-item>
+                            <ion-label floating>Cliente:</ion-label>
+                            <ion-input name='client' [readonly]="this.status == 'view'" [(ngModel)]='sale.buyer' type='text' required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-12 col-md-4 col-lg-4>
+                        <ion-item>
+                            <ion-label floating>Unidad(es):</ion-label>
+                            <ion-input name='quantity' [readonly]="this.status == 'view'" [(ngModel)]='sale.quantity' min="1" max="999999" type='number' required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-12 col-md-8 col-lg-8>
+                        <ion-item>
+                            <ion-label floating>Total:</ion-label>
+                            <ion-input name='value' [readonly]="this.status == 'view'" [(ngModel)]='sale.value' min="0" max="999999999"type='number' required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-12 col-md-4 col-lg-4>
+                        <ion-item class='sale-check'>
+                            <ion-label>Pagado</ion-label>
+                            <ion-checkbox [(ngModel)]='sale.payStatus' [disabled]="this.status == 'view'" name='paid'></ion-checkbox>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </form>
+        </div>
+    </ion-row>
+</ion-content>

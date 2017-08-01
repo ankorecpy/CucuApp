@@ -4,7 +4,7 @@
       <h2>Bienvenido</h2>
     </div>
     <ion-list no-lines>
-      <button ion-item *ngFor='let icon of listOfIcons; let _index = index' menuClose>
+      <button ion-item *ngFor='let icon of listOfIcons; let index = index' (click)="goToPage(index)" menuClose>
         <ion-icon [name]='icon.icon' margin-right></ion-icon>{{icon.title}}
       </button>
     </ion-list>

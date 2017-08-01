@@ -8,26 +8,37 @@ import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { CalendarPage } from '../pages/calendar/calendar';
-import { BuyPage } from '../pages/buy/buy';
-import { SellPage } from '../pages/sell/sell';
+import { PurchasePage } from '../pages/purchase/purchase';
+import { SalePage } from '../pages/sale/sale';
 import { OperationsPage } from '../pages/operations/operations';
+import { ReportPage } from '../pages/report/report';
+import { InformationPage } from '../pages/information/information';
+import { PendingSalesPage } from '../pages/pending-sales/pending-sales';
+import { AnnualClosurePage } from '../pages/annual-closure/annual-closure';
  
 import { MonthData } from '../providers/models/month-data';
 import { MonthCardComponent } from '../components/month-card/month-card';
-import { Sell } from '../providers/models/sell-data';
-import { Buy } from '../providers/models/buy-data';
+import { Sale } from '../providers/models/sale-data';
+import { Purchase } from '../providers/models/purchase-data';
+import { Production } from '../providers/models/production-data';
 
-import { SellDao } from '../providers/dataBase/sell-dao';
-import { BuyDao } from '../providers/dataBase/buy-dao';
+import { SaleDao } from '../providers/dataBase/sale-dao';
+import { PurchaseDao } from '../providers/dataBase/purchase-dao';
+import { ProductionDao } from '../providers/dataBase/production-dao';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     CalendarPage,
-    BuyPage,
-    SellPage,
+    PurchasePage,
+    SalePage,
     OperationsPage,
+    InformationPage,
+    ReportPage,
+    InformationPage,
+    PendingSalesPage,
+    AnnualClosurePage,
     MonthCardComponent
   ],
   imports: [
@@ -39,19 +50,25 @@ import { BuyDao } from '../providers/dataBase/buy-dao';
     MyApp,
     HomePage,
     CalendarPage,
-    BuyPage,
-    SellPage,
-    OperationsPage
+    PurchasePage,
+    SalePage,
+    OperationsPage,
+    ReportPage,
+    InformationPage,
+    PendingSalesPage,
+    AnnualClosurePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     MonthData,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Sell,
-    Buy,
-    SellDao,
-    BuyDao
+    Sale,
+    Purchase,
+    Production,
+    SaleDao,
+    PurchaseDao,
+    ProductionDao
   ]
 })
 export class AppModule {}

@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-navbar color='primary'>
+        <ion-title text-center>COMPRA</ion-title>
+        <ion-buttons *ngIf="this.status != 'view'" right>
+            <button ion-button icon-only [disabled]='!form.valid' (click)="processPurchase()">
+                <ion-icon name='checkmark'></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <form #form="ngForm">
+        <ion-item>
+            <ion-label floating>Concepto:</ion-label>
+            <ion-input name='concept' [readonly]="this.status=='view'" [(ngModel)]="this.purchase.concept" type='text' required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Unidad(es):</ion-label>
+            <ion-input name='quantity' [readonly]="this.status=='view'" min="0" max="99999" [(ngModel)]="this.purchase.quantity" type='number' required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Valor Unitario:</ion-label>
+            <ion-input name='value' [readonly]="this.status=='view'" min="0" max="99999999" [(ngModel)]="this.purchase.value" type='number' required></ion-input>
+        </ion-item>
+    </form>
+</ion-content>

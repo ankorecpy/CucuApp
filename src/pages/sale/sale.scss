@@ -1,0 +1,23 @@
+page-sale{    
+    .sale-main{
+        height: 100%;
+        width: 100%;    
+        flex-direction: column;    
+
+    }
+    .sale-main ion-item{
+        font-size: 18px;
+        opacity: 0%;
+    }
+    .sale-navbar{
+        padding: 0px;
+    }
+    .sale-check{
+        margin: 20px 0px 0px 0px;
+    }
+    .sale-inputs{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}

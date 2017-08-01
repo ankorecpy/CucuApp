@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Operation } from './operation-data';
 
 @Injectable()
-export class Sell extends Operation {
+export class Sale extends Operation {
   private buyer: string;
   private payStatus: boolean;
 
